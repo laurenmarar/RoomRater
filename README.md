@@ -92,7 +92,10 @@ Several **Natural language processing** techiques were used to identify relevant
 - Word tokenization to break sentences into word tokens for analysis
 - Lemmatization so that words like plants and plant can be grouped into a single token
 
-[image]
+8/10 Background                                 | 9/10 Background
+:----------------------------------------------:|:----------------------------------------------:
+![Tweet rated 8/10](./images/TweetExample8.PNG) | ![Tweet rated 9/10](./images/TweetExample9.PNG)
+
 We can tell RoomRater cares most about art in the background, followed by plants, books, and a sense of depth. After that, lighting, pillows, and flowers factor in.
 
 We can also see how RoomRater focuses on different keywords for backgrounds of different quality. Low- to mid-rated backgrounds need work on camera angle and keeping their cords out of sight. Backgrounds in the 7-9 range have the basics down and can focus on adding elements like plants and art to enhance the decor.
