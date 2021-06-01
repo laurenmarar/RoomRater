@@ -10,21 +10,24 @@ This project predicts the quality of people's web conference backgrounds using N
 
 The models are trained and tested on tweets collected from the Room Rater (@ratemyskyperoom) Twitter account. This account posts photos of people's web conference backgrounds, critiquing the background aesthetics and assigning them a score of 0-10 out of 10.
 
-Quick examples of Room Rater's tweets and rating style:
-[image 8 and 9]
-
 Natural Language Processing is used to tokenize the tweet text to identify key vocabularly used in the background evaluation criteria. The tokenized text is also fed into the machine learning model, where several classifiers are tested in their ability to predict ratings.
+
+Quick examples of Room Rater's tweets and rating style:
+
+8/10 Background                                 | 9/10 Background
+:----------------------------------------------:|:----------------------------------------------:
+![Tweet rated 8/10](./images/TweetExample8.PNG) | ![Tweet rated 9/10](./images/TweetExample9.PNG)
 
 #### Navigation
 
-##### README Contents
+#### Table of Contents
 
 - [Optimizing your web conference background with Room Rater](#optimizing-your-web-conference-background-with-room-rater)
       - [Data Science Nanodegree Capstone Project](#data-science-nanodegree-capstone-project)
   - [Project Definition](#project-definition)
     - [Overview](#overview)
       - [Navigation](#navigation)
-        - [README Contents](#readme-contents)
+      - [Table of Contents](#table-of-contents)
         - [Files](#files)
     - [Problem Statement](#problem-statement)
     - [Metrics](#metrics)
@@ -38,9 +41,10 @@ Natural Language Processing is used to tokenize the tweet text to identify key v
 ##### Files
 
 - RoomRater.ipynb - contains code for data wrangling, NLP, models, and evaluation as well as analysis of findings along the way
-- Data sources:
+- Data:
     - roomratertweets.csv (tweets collected through the Twitter API)
     - roomratertweets2.csv (additoinal tweets collected)
+- Requirements.txt
 - Blog post:
 
 ### Problem Statement
@@ -59,14 +63,15 @@ One can scroll through to get an idea about what might make a good background, b
 
 **Outcome variable**: Rating, a multiclass variable on a 1-10 scale
 
-To evaluate the classification models, the following **evaluation metrics** will be used:
+**Evaluation metrics**:
+To evaluate the classification models, the following metrics will be used:
 - Accuracy - portion of labels accurately predicted
 - Precision - the portion of predictions of a specific class that are correctly predicted (ex. how many predicted to be 9 were actually 9)
 - Recall - the portion of a specific class a correctly predicted (ex. how many actual 9's were predicted to be 9)
 - F1 score - the harmonic mean of precision and recall
 - ROC AUC - the area under the ROC curve (true positive rate vs false positive rate), with .5 signifying the model performing on par with random classification.
 
-Because the rating is ordinal, the above metrics don't account for the degree of misclassification. They won't recognize that misclassifying a 10 as a 9 is perferable to misclassifying a 10 as a 2. Therefore we'll also examine the following for evaluation:
+Because the rating is ordinal, the above metrics don't account for the degree of misclassification. They won't recognize that misclassifying a 10 as a 9 is perferable to misclassifying a 10 as a 2. Therefore we'll also use the following data point to assess the distance from the correct value:
 - Average absolute value of the difference between the actual and predicted ratings
 
 ### Quick start
@@ -74,9 +79,9 @@ Because the rating is ordinal, the above metrics don't account for the degree of
 #### Access tweets with the Twitter API
 
 Resources to get you started with the Twitter API and a helpful python package for getting tweets:
-https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/introduction
-https://docs.tweepy.org/en/latest/
-https://docs.tweepy.org/en/v3.10.0/cursor_tutorial.html
+- https://developer.twitter.com/en/docs/twitter-api/tweets/lookup/introduction
+- https://docs.tweepy.org/en/latest/
+- https://docs.tweepy.org/en/v3.10.0/cursor_tutorial.html
 
 #### Requirements
 
@@ -92,14 +97,15 @@ Several **Natural language processing** techiques were used to identify relevant
 - Word tokenization to break sentences into word tokens for analysis
 - Lemmatization so that words like plants and plant can be grouped into a single token
 
-8/10 Background                                 | 9/10 Background
-:----------------------------------------------:|:----------------------------------------------:
-![Tweet rated 8/10](./images/TweetExample8.PNG) | ![Tweet rated 9/10](./images/TweetExample9.PNG)
+Most common word tokens used in Room Rater's ratings:
+![Most common word tokens used in Room Rater's ratings](./images/Keywords.PNG)
 
 We can tell RoomRater cares most about art in the background, followed by plants, books, and a sense of depth. After that, lighting, pillows, and flowers factor in.
 
 We can also see how RoomRater focuses on different keywords for backgrounds of different quality. Low- to mid-rated backgrounds need work on camera angle and keeping their cords out of sight. Backgrounds in the 7-9 range have the basics down and can focus on adding elements like plants and art to enhance the decor.
-[image]
+
+Most common words by rating:
+![Most common word by rating](./images/KeywordsByRating.PNG)
 
 **Five classifiers were evaluated:**
 - Random Forest Classifier (fits multipe decision tree classifiers on different sub-samples to minimize over-fitting)
@@ -115,7 +121,9 @@ GridSearchCV was implemented to evaluate several combinations of parameters for 
 The Random Forest Classifier was the only classifier that had an ROC AUC score above .6. With .5 signifying performance equivalent to random assignment, none of these models performed great.
 
 In general, the balanced classifiers did not perform as well as the originals. Here's an example of the Random Forest and the Balanced Random Forest predictions in comparison with the actual ratings:
-[image_rf]
+
+Impact of balancing on distribution of predicted ratings for the Random Forest Classifier:
+![Random Forest Classifier vs Balanced RF Classifier](./images/ExampleResultsRF.PNG)
 
 If the real world population is similar to the sample that RoomRater has collected, with many excellent, 10/10-worthy backgrounds, the Random Forest Classifier shows the most potential. However, if people's web backgrounds in the real world are less likely to score a 10, the balanced classifiers may be worth considering.
 
@@ -123,5 +131,5 @@ See Jupyter Notebook for full evaluation of each model.
 
 ## Acknowledgements
 
-This projec was completed as a part of the Data Science Nanodegree with www.udacity.com.
+This project was completed as a part of the Data Science Nanodegree with www.udacity.com.
 
