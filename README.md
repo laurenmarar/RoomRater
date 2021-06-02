@@ -47,7 +47,7 @@ Quick examples of Room Rater's tweets and rating style:
     - roomratertweets.csv (tweets collected through the Twitter API)
     - roomratertweets2.csv (additoinal tweets collected)
 - Requirements.txt
-- Blog post:
+- Blog post: https://lomarar.medium.com/optimizing-your-web-conference-background-with-room-rater-data-dad61f966d4a
 
 ### Problem Statement
 
@@ -111,11 +111,11 @@ Most common words by rating:
 
 **Five classifiers were evaluated:**
 
-- *Random Forest Classifier* (fits multipe decision tree classifiers on different sub-samples to minimize over-fitting)
-- *Balanced Random Forest Classifier* (balances by employing under-sampling to the random forest classifier)
-- *Gradient Boosting Classifier* (runs multiple Decision Tree classifiers to minimize the loss function)
+- *Random Forest Classifier* (fits multiple decision tree classifiers on different sub-samples to minimize over-fitting)
+- *Balanced Random Forest Classifier* (balances classes by employing under-sampling to the Random Forest Classifier)
+- *Gradient Boosting Classifier* (runs multiple decision tree classifiers to minimize the loss function)
 - *Easy Ensemble Classifier* (using the AdaBoost Classifier as a base estimator, employs random under-sampling on the bootstrap samples)
-- *Ordinal Logistic Regresstion* (a classifier that takes into account that the order of the ratings are meaningful)
+- *Ordinal Logistic Regresstion* (takes into account that the order of the ratings are meaningful)
 
 GridSearchCV was implemented to evaluate several combinations of parameters for the classifiers.
 
@@ -137,7 +137,7 @@ See Jupyter Notebook for full evaluation of each model.
 
 *Sentiment analysis*
 
-Adding sentiment analysis would likely improve the model. We see common words like "depth", "lighting", "reframe", but would gain more value if we could distinguish when these words are used positively or negatively.
+Adding additoinal sentiment analysis steps could improve the model. We see common words like "depth", "lighting", "reframe", but would gain more value if we could distinguish when these words are used positively or negatively.
 
 *Verb tesne analysis*
 
