@@ -8,7 +8,7 @@
 
 This project predicts the quality of people's web conference backgrounds using Natural Language Processing and Machine Learning pipelines.
 
-The models are trained and tested on tweets collected from the Room Rater (@ratemyskyperoom) Twitter account. This account posts photos of people's web conference backgrounds, critiquing the background aesthetics and assigning them a score of 0-10 out of 10.
+The models are trained and tested on tweets collected from the Room Rater (@ratemyskyperoom) Twitter account. This account posts photos of people's web conference backgrounds, critiquing the background aesthetics and assigning them a score on a scale of 0-10.
 
 Natural Language Processing is used to tokenize the tweet text to identify key vocabulary used in the background evaluation criteria. The tokenized text is also fed into the machine learning model, where several classifiers are tested in their ability to predict ratings.
 
@@ -57,7 +57,7 @@ Many people were not used to presenting themselves in this context, and are even
 
 Enter Room Rater. This Twitter account began posting photos of various people appearning on air, particularly reporters. They began scoring people's backgrounds, applauding them for a good use of plants and books in the background, or critiquing their lighighting situation.
 
-One can scroll through to get an idea about what might make a good background, but what would the data say if we look at their scores systematically.
+Can we leverage NLP and Classification models to identify what makes a successful background?
 
 ### Metrics
 
@@ -102,9 +102,9 @@ Several **Natural language processing** techniques were used to identify relevan
 Most common word tokens used in Room Rater's ratings:
 ![Most common word tokens used in Room Rater's ratings](./images/Keywords.PNG)
 
-We can tell RoomRater cares most about art in the background, followed by plants, books, and a sense of depth. After that, lighting, pillows, and flowers factor in.
+We can tell Room Rater cares most about art in the background, followed by plants, books, and a sense of depth. After that, lighting, pillows, and flowers factor in.
 
-We can also see how RoomRater focuses on different keywords for backgrounds of different quality. Low- to mid-rated backgrounds need work on camera angle and keeping their cords out of sight. Backgrounds in the 7-9 range have the basics down and can focus on adding elements like plants and art to enhance the decor.
+We can also see how Room Rater focuses on different keywords for backgrounds of different quality. Low- to mid-rated backgrounds need work on camera angle and keeping their cords out of sight. Backgrounds in the 7-9 range have the basics down and can focus on adding elements like plants and art to enhance the decor.
 
 Most common words by rating:
 ![Most common word by rating](./images/KeywordsByRating.PNG)
@@ -125,12 +125,11 @@ The Random Forest Classifier was the only classifier that had an ROC AUC score a
 
 In general, the balanced classifiers did not perform as well as the originals. Here's an example of the Random Forest and the Balanced Random Forest predictions in comparison with the actual ratings:
 
-Impact of balancing on distribution of predicted ratings for the Random Forest Classifier
 ![Random Forest Classifier vs Balanced RF Classifier](./images/ExampleResultsRF.PNG)
 
-If the real world population is similar to the sample that RoomRater has collected, with many excellent, 10/10-worthy backgrounds, the Random Forest Classifier shows the most potential. However, if people's web backgrounds in the real world are less likely to score a 10, the balanced classifiers may be worth considering.
+If the real world population is similar to the sample that Room Rater has collected, with many excellent, 10/10-worthy backgrounds, the Random Forest Classifier shows the most potential. However, if people's web backgrounds in the real world are not as attractive as the ones Room Rater selects, incorprating balancing in the classifier may be worth considering.
 
-The Ordinal Logistic Regression didn't outperform the other classifiers, despite assigning ordinal value to the classes. However, further research could explore ordinal classification using the Random Forest or Boosting methodologies. 
+The Ordinal Logistic Regression didn't outperform the other classifiers, despite assigning ordinal value to the classes. However, further research could explore ordinal classification using the Random Forest or Boosting methodologies. A visual assessment showed that it was more likely to predict ratings near 10, which does more cloesly align with Room Rater's rating habits.
 
 See Jupyter Notebook for full evaluation of each model.
 
@@ -140,15 +139,15 @@ See Jupyter Notebook for full evaluation of each model.
 
 Adding sentiment analysis would likely improve the model. We see common words like "depth", "lighting", "reframe", but would gain more value if we could distinguish when these words are used positively or negatively.
 
-*Parts of speech/verb form analysis*
+*Verb tesne analysis*
 
-Identifying verb type, to see whether the command form is used, would also help us identify if RoomRater is either applauding the person for effective use or if they're making a recommendation. For example, the use of the gerund in "good reframing" is positive, whereas the use of the command form in "reframe" is a suggestion for improvement.
+Identifying verb type, to see whether the command form is used, would also help us identify if Room Rater is either applauding the person for effective use or if they're making a recommendation. For example, the use of the gerund (-ing) in "good reframing" is positive, whereas the use of the command form in "reframe" is a suggestion for improvement.
 
 *Deep learning and image classification*
 
-Another data source that could enhance the model is the actual photo. A neural netowrk could be developed to identify visual similarities in what makes a 10/10 background. Like sentiment analysis, this model could help assess the quality of the lighting, placement of the decore, and position of the camera.
+Another data source that could enhance the model is the actual photo of the background. A Convolutional Neural Netowrk could be developed to identify visual patterns in associated with each rating. Like sentiment analysis, this model could help assess the quality of the lighting, placement of the decor, and position of the camera.
 
-One could take this project further and create an app that allows users to upload a photo of their web background, and through image analysis, recommendations would be made to add plants, artwork, books, or adjust lighting and framing.
+One could take this project further and create an app that allows users to upload a photo of their web background, and through image classification, recommendations would be made to add plants, artwork, books, or adjust lighting and framing.
 
 ## Acknowledgements
 
