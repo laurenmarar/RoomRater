@@ -42,6 +42,7 @@ Quick examples of Room Rater's tweets and rating style:
 ##### Files
 
 - RoomRater.ipynb - contains code for data wrangling, NLP, models, and evaluation as well as analysis of findings along the way
+- RoomRater.html - HTML version of Jupyter Notebook
 - Data:
     - roomratertweets.csv (tweets collected through the Twitter API)
     - roomratertweets2.csv (additoinal tweets collected)
