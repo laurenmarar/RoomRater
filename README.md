@@ -10,7 +10,7 @@ This project predicts the quality of people's web conference backgrounds using N
 
 The models are trained and tested on tweets collected from the Room Rater (@ratemyskyperoom) Twitter account. This account posts photos of people's web conference backgrounds, critiquing the background aesthetics and assigning them a score of 0-10 out of 10.
 
-Natural Language Processing is used to tokenize the tweet text to identify key vocabularly used in the background evaluation criteria. The tokenized text is also fed into the machine learning model, where several classifiers are tested in their ability to predict ratings.
+Natural Language Processing is used to tokenize the tweet text to identify key vocabulary used in the background evaluation criteria. The tokenized text is also fed into the machine learning model, where several classifiers are tested in their ability to predict ratings.
 
 Quick examples of Room Rater's tweets and rating style:
 
@@ -36,6 +36,7 @@ Quick examples of Room Rater's tweets and rating style:
       - [Requirements](#requirements)
   - [Methodology](#methodology)
   - [Results](#results)
+  - [Recommendations](#recommendations)
   - [Acknowledgements](#acknowledgements)
 
 ##### Files
@@ -49,17 +50,17 @@ Quick examples of Room Rater's tweets and rating style:
 
 ### Problem Statement
 
-At the start of the COVID pandemic, professionals found themselves suddenly launched into a work-from-home situation, requireing that they attend meetings from their kitchens, living rooms, bedrooms, and if they're lucky, home offices.
+At the start of the COVID pandemic, professionals found themselves suddenly launched into a work-from-home situation, requiring that they attend meetings from their kitchens, living rooms, bedrooms, and if they're lucky, home offices.
 
-Many people were not used to presenting themselves in this context, and are even less aware of how their bacgrounds were a part of the impression they gave. 
+Many people were not used to presenting themselves in this context, and are even less aware of how their backgrounds were a part of the impression they gave. 
 
-Enter Room Rater. This Twitter account begain posting photos of various people appearning on air, particularly reporters. They began scoring people's backgrounds, applauding them for a good use of plants and books in the background, or critiquing their lighighting situation.
+Enter Room Rater. This Twitter account began posting photos of various people appearning on air, particularly reporters. They began scoring people's backgrounds, applauding them for a good use of plants and books in the background, or critiquing their lighighting situation.
 
 One can scroll through to get an idea about what might make a good background, but what would the data say if we look at their scores systematically.
 
 ### Metrics
 
-**Feature**: Tokenized tweet text
+**Predictive variable**: Tokenized tweet text
 
 **Outcome variable**: Rating, a multiclass variable on a 1-10 scale
 
@@ -71,7 +72,7 @@ To evaluate the classification models, the following metrics will be used:
 - F1 score - the harmonic mean of precision and recall
 - ROC AUC - the area under the ROC curve (true positive rate vs false positive rate), with .5 signifying the model performing on par with random classification.
 
-Because the rating is ordinal, the above metrics don't account for the degree of misclassification. They won't recognize that misclassifying a 10 as a 9 is perferable to misclassifying a 10 as a 2. Therefore we'll also use the following data point to assess the distance from the correct value:
+Because the rating is ordinal, the above metrics don't account for the degree of misclassification. They won't recognize that misclassifying a 10 as a 9 is preferable to misclassifying a 10 as a 2. Therefore we'll also use the following data point to assess the distance from the correct value:
 - Average absolute value of the difference between the actual and predicted ratings
 
 ### Quick start
@@ -91,7 +92,7 @@ Clone the repository and install the requirements using the script below. The pr
 
 ## Methodology
 
-Several **Natural language processing** techiques were used to identify relevant key words:
+Several **Natural language processing** techniques were used to identify relevant key words:
 - Removal of punctuation, URLs, and other non-text characters, as well as normalization of case
 - Removal of English stop words (the, a, an)
 - Word tokenization to break sentences into word tokens for analysis
@@ -108,11 +109,12 @@ Most common words by rating:
 ![Most common word by rating](./images/KeywordsByRating.PNG)
 
 **Five classifiers were evaluated:**
-- Random Forest Classifier (fits multipe decision tree classifiers on different sub-samples to minimize over-fitting)
-- Balanced Random Forest Classifier (balances by employing under-sampling to the random forest classifier)
-- Gradient Boosting Classifier (runs multiple Decision Tree classifiers to minimize the loss function)
-- Easy Ensemble Classifier (using the AdaBoost Classifier as a base estimator, employs random under-sampling on the bootstrap samples)
-- Ordinal Logistic Regresstion (a classifier that takes into account that the order of the ratings are meaningful)
+
+- *Random Forest Classifier* (fits multipe decision tree classifiers on different sub-samples to minimize over-fitting)
+- *Balanced Random Forest Classifier* (balances by employing under-sampling to the random forest classifier)
+- *Gradient Boosting Classifier* (runs multiple Decision Tree classifiers to minimize the loss function)
+- *Easy Ensemble Classifier* (using the AdaBoost Classifier as a base estimator, employs random under-sampling on the bootstrap samples)
+- *Ordinal Logistic Regresstion* (a classifier that takes into account that the order of the ratings are meaningful)
 
 GridSearchCV was implemented to evaluate several combinations of parameters for the classifiers.
 
@@ -122,12 +124,30 @@ The Random Forest Classifier was the only classifier that had an ROC AUC score a
 
 In general, the balanced classifiers did not perform as well as the originals. Here's an example of the Random Forest and the Balanced Random Forest predictions in comparison with the actual ratings:
 
-Impact of balancing on distribution of predicted ratings for the Random Forest Classifier:
+Impact of balancing on distribution of predicted ratings for the Random Forest Classifier
 ![Random Forest Classifier vs Balanced RF Classifier](./images/ExampleResultsRF.PNG)
 
 If the real world population is similar to the sample that RoomRater has collected, with many excellent, 10/10-worthy backgrounds, the Random Forest Classifier shows the most potential. However, if people's web backgrounds in the real world are less likely to score a 10, the balanced classifiers may be worth considering.
 
+The Ordinal Logistic Regression didn't outperform the other classifiers, despite assigning ordinal value to the classes. However, further research could explore ordinal classification using the Random Forest or Boosting methodologies. 
+
 See Jupyter Notebook for full evaluation of each model.
+
+## Recommendations
+
+*Sentiment analysis*
+
+Adding sentiment analysis would likely improve the model. We see common words like "depth", "lighting", "reframe", but would gain more value if we could distinguish when these words are used positively or negatively.
+
+*Parts of speech/verb form analysis*
+
+Identifying verb type, to see whether the command form is used, would also help us identify if RoomRater is either applauding the person for effective use or if they're making a recommendation. For example, the use of the gerund in "good reframing" is positive, whereas the use of the command form in "reframe" is a suggestion for improvement.
+
+*Deep learning and image classification*
+
+Another data source that could enhance the model is the actual photo. A neural netowrk could be developed to identify visual similarities in what makes a 10/10 background. Like sentiment analysis, this model could help assess the quality of the lighting, placement of the decore, and position of the camera.
+
+One could take this project further and create an app that allows users to upload a photo of their web background, and through image analysis, recommendations would be made to add plants, artwork, books, or adjust lighting and framing.
 
 ## Acknowledgements
 
